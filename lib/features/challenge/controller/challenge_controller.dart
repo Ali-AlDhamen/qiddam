@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:qiddam/core/utils/show_snackbar.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../core/providers/storage_provider.dart';
@@ -39,8 +41,6 @@ final watchChallengeProvider =
   return challengeController.watchChallenge(challengeID);
 });
 
-
-
 class ChallengeController extends StateNotifier<bool> {
   final ChallengeRepository _challengeRepository;
   final Ref _ref;
@@ -65,30 +65,24 @@ class ChallengeController extends StateNotifier<bool> {
     final userId = _ref.read(userProvider)?.id ?? '';
     final id = const Uuid().v4();
     final Challenge challenge = Challenge(
-        participants: [userId],
-        id: id,
-        title: title,
-        description: description,
-        userId: userId,
-        createdAt: DateTime.now(),
-        days: days);
+      participants: [userId],
+      id: id,
+      title: title,
+      description: description,
+      userId: userId,
+      createdAt: DateTime.now(),
+      days: days,
+    );
 
     final res = await _challengeRepository.createChallenge(
       challenge: challenge,
     );
     state = false;
     res.fold((l) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(l.message),
-        ),
-      );
+      showSnackbar(context, l.message);
     }, (r) async {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Challenge created successfully'),
-        ),
-      );
+      showSnackbar(context, 'Challenge created successfully');
+      context.pop();
     });
   }
 
@@ -115,17 +109,9 @@ class ChallengeController extends StateNotifier<bool> {
     state = false;
 
     res.fold((l) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(l.message),
-        ),
-      );
+      showSnackbar(context, l.message);
     }, (r) async {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Comment added successfully'),
-        ),
-      );
+      showSnackbar(context, 'Comment added successfully');
     });
   }
 
@@ -144,17 +130,9 @@ class ChallengeController extends StateNotifier<bool> {
     state = false;
 
     res.fold((l) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(l.message),
-        ),
-      );
+      showSnackbar(context, l.message);
     }, (r) async {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Challenge joined successfully'),
-        ),
-      );
+      showSnackbar(context, 'Challenge joined successfully');
     });
   }
 

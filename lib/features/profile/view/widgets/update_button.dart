@@ -42,7 +42,7 @@ class UpdateButton extends ConsumerWidget {
               ),
             ),
             gapW8,
-            if (isLoading) LoaderWidget(color: AppTheme.whiteColor),
+            if (isLoading) const LoaderWidget(color: AppTheme.whiteColor),
           ],
         ),
       ),

@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qiddam/core/common/loader_widget.dart';
 import 'package:qiddam/core/constants/app_sizes.dart';
+import 'package:qiddam/features/challenge/controller/challenge_controller.dart';
 import 'package:qiddam/theme/app_theme.dart';
 
-import '../../controller/auth_controller.dart';
+class CreateButton extends ConsumerWidget {
+  final void Function(BuildContext, WidgetRef) onPressed;
 
-class AuthButton extends ConsumerWidget {
-  final void Function(BuildContext) onPressed;
   final String text;
-  const AuthButton({
+  const CreateButton({
     required this.onPressed,
     required this.text,
     Key? key,
@@ -17,7 +17,7 @@ class AuthButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isLoading = ref.watch(authControllerProvider);
+    final isLoading = ref.watch(challengeControllerProvider);
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -28,7 +28,7 @@ class AuthButton extends ConsumerWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       child: TextButton(
-        onPressed: isLoading ? null : () => onPressed(context),
+        onPressed: isLoading ? null : () => onPressed(context, ref),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../core/providers/storage_provider.dart';
+import '../../../core/utils/show_snackbar.dart';
 import '../../../models/user_model.dart';
 import '../repository/auth_repository.dart';
 
@@ -65,7 +66,7 @@ class AuthController extends StateNotifier<bool> {
         email: email, password: password, username: username, name: name);
 
     state = false;
-    user.fold((l) => print(l.message), (userModel) {
+    user.fold((l) => showSnackbar(context, l.message), (userModel) {
       _ref.read(userProvider.notifier).update((state) => userModel);
     });
   }
@@ -81,7 +82,7 @@ class AuthController extends StateNotifier<bool> {
 
     state = false;
     user.fold(
-        (l) => print(l.message),
+        (l) => showSnackbar(context, l.message),
         (userModel) =>
             _ref.read(userProvider.notifier).update((state) => userModel));
   }
@@ -120,7 +121,7 @@ class AuthController extends StateNotifier<bool> {
     final res = await _authRepository.updateUserData(newUserModel);
     state = false;
     res.fold(
-      (l) => print(l.message),
+      (l) => showSnackbar(context, l.message),
       (r) {
         _ref.read(userProvider.notifier).update((state) => newUserModel);
         context.pop();

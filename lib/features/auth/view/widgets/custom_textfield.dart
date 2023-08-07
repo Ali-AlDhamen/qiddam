@@ -3,7 +3,7 @@ import 'package:qiddam/theme/app_theme.dart';
 
 class CustomTextField extends StatelessWidget {
   const CustomTextField({
-    Key? key, // Make sure to specify the correct type 'Key?'
+    Key? key,
     required this.controller,
     required this.validator,
     required this.hintText,
@@ -31,7 +31,8 @@ class CustomTextField extends StatelessWidget {
         cursorColor: AppTheme.primaryColor,
         scrollPadding: const EdgeInsets.only(bottom: 100),
         controller: controller,
-        keyboardType: TextInputType.emailAddress,
+        keyboardType: keyboardType,
+        maxLines: null,
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.all(20),
           hintText: hintText,
@@ -59,7 +60,7 @@ class CustomTextField extends StatelessWidget {
               color: Colors.red,
             ),
           ),
-          
+
           hintStyle: const TextStyle(
             color: AppTheme.subtitleColor,
             fontSize: 16,

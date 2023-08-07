@@ -8,6 +8,7 @@ import 'package:qiddam/features/profile/view/update_profile_screen.dart';
 import '../features/auth/controller/auth_controller.dart';
 import '../features/auth/view/signin_screen.dart';
 import '../features/auth/view/signup_screen.dart';
+import '../features/challenge/view/create_challenge_screen.dart';
 import '../features/home/view/home_screen.dart';
 import '../features/profile/view/challenge_screen.dart';
 
@@ -33,11 +34,28 @@ final routeProvier = Provider<GoRouter>(
               navigatorKey: _shellNavigatorHomeKey,
               routes: [
                 GoRoute(
-                  path: '/',
-                  builder: (context, state) {
-                    return const ChallengesScreen();
-                  },
-                ),
+                    path: '/',
+                    builder: (context, state) {
+                      return const ChallengesScreen();
+                    },
+                    routes: [
+                      GoRoute(
+                        path: 'challenge/:id',
+                        builder: (context, state) {
+                          final String id = state.pathParameters['id']!;
+                          return ChallengeScreen(challengeId: id);
+                        },
+                      ),
+                      GoRoute(
+                        path: 'create-challenge',
+                        pageBuilder: (context, state) {
+                          return MaterialPage(
+                            fullscreenDialog: true,
+                            child:  CreateChallengeScreen(),
+                          );
+                        },
+                      )
+                    ]),
               ],
             ),
             StatefulShellBranch(

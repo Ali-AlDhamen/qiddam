@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/constants/app_sizes.dart';
+import '../../../../core/utils/show_snackbar.dart';
 import '../../../../models/user_model.dart';
 import '../../../auth/controller/auth_controller.dart';
 
@@ -14,20 +15,8 @@ class ProfileInformation extends ConsumerWidget {
   void copyUserLink(String name, BuildContext context) async {
     await Clipboard.setData(ClipboardData(text: "$name.qiddam.com"));
 
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(
-        SnackBar(
-          content: Text(
-            'User link copied to clipboard',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 16,
-            ),
-          ),
-          backgroundColor: Theme.of(context).primaryColor,
-        ),
-      );
+    // ignore: use_build_context_synchronously
+    showSnackbar(context, "User Link Copied to Clipboard");
   }
 
   void launchUserProfile(String username) async {
@@ -41,8 +30,14 @@ class ProfileInformation extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user = ref.watch(userProvider) ??  const UserModel(email: "guest@guest.com" , id: "11" , name: "guest" , photoUrl: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" , username: "guest");
-    print(user);
+    final user = ref.watch(userProvider) ??
+        const UserModel(
+            email: "guest@guest.com",
+            id: "11",
+            name: "guest",
+            photoUrl:
+                "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+            username: "guest");
     return Column(
       children: [
         CircleAvatar(

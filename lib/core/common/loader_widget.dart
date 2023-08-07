@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 
 class LoaderWidget extends StatelessWidget {
-  Color? color;
-   LoaderWidget({
+  final Color? color;
+  const LoaderWidget({
     Key? key,
     this.color,
   }) : super(key: key);
