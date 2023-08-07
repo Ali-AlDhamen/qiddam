@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:qiddam/features/challenge/controller/challenge_controller.dart';
 import 'package:qiddam/features/profile/view/widgets/challenge_card.dart';
 import 'package:qiddam/features/profile/view/widgets/profile_information.dart';
 import 'package:qiddam/theme/app_theme.dart';
 
+import '../../../core/common/aysnc_value_widget.dart';
 import '../../../models/challenge.dart';
 import '../../auth/controller/auth_controller.dart';
 
@@ -12,6 +14,9 @@ class ProfileScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final userId = ref.watch(userProvider)?.id ?? "1";
+    print(userId);
+    final userChallenges = ref.watch(watchUserChallengesProvider(userId));
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profile'),
@@ -42,17 +47,23 @@ class ProfileScreen extends ConsumerWidget {
                   ),
                 ),
               ),
-              MyChallengeCard(
-                challenge: Challenge(
-                  title: 'Challenge 1',
-                  participants: const ["Ali", "Ahmed", "Hassan"],
-                  id: '1',
-                  description: 'description',
-                  userId: 'userId',
-                  createdAt: DateTime.now(),
-                  days: 1,
-                ),
-              )
+              AsyncValueWidget<List<Challenge>>(
+                value: userChallenges,
+                data: (challenges) {
+                  if (challenges.isEmpty) {
+                    return const Center(child: Text('No Challenges'));
+                  }
+                  return Expanded(
+                    child: ListView.builder(
+                      itemCount: challenges.length,
+                      itemBuilder: (context, index) {
+                        final challenge = challenges[index];
+                        return MyChallengeCard(challenge: challenge);
+                      },
+                    ),
+                  );
+                },
+              ),
             ],
           ),
         ),
