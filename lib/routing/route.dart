@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:qiddam/features/post/view/challenges_screen.dart';
 import 'package:qiddam/features/profile/view/profile_screen.dart';
 
+import '../features/auth/view/signin_screen.dart';
+import '../features/auth/view/signup_screen.dart';
 import '../features/home/view/home_screen.dart';
 import '../features/profile/view/challenge_screen.dart';
 
@@ -12,12 +14,13 @@ final _shellNavigatorHomeKey = GlobalKey<NavigatorState>(debugLabel: 'home');
 final _shellNavigatorProfileKey =
     GlobalKey<NavigatorState>(debugLabel: 'profile');
 
-final routeProvier = Provider<GoRouter>((ref) {
-  // final auth = ref.watch(authRepositoryProvider);
+final routeProvier = Provider<GoRouter>(
+  (ref) {
+    // final auth = ref.watch(authRepositoryProvider);
 
-  return GoRouter(
+    return GoRouter(
       debugLogDiagnostics: true,
-      initialLocation: '/',
+      initialLocation: '/signin',
       // refreshListenable: GoRouterRefreshStream(auth.authStateChange),
       navigatorKey: _rootNavigatorKey,
       routes: [
@@ -42,24 +45,32 @@ final routeProvier = Provider<GoRouter>((ref) {
               navigatorKey: _shellNavigatorProfileKey,
               routes: [
                 GoRoute(
-                  path: '/profile',
-                  builder: (context, state) {
-                    return const ProfileScreen();
-                  },
-
-                  routes: [
-                    GoRoute(
-                      path: 'challenge/:id', 
-                      builder: (context, state) {
-                        final String id = state.pathParameters['id']!;
-                        return  ChallengeScreen(challengeId: id);
-                      },
-                    ),
-                  ]
-                ),
+                    path: '/profile',
+                    builder: (context, state) {
+                      return const ProfileScreen();
+                    },
+                    routes: [
+                      GoRoute(
+                        path: 'challenge/:id',
+                        builder: (context, state) {
+                          final String id = state.pathParameters['id']!;
+                          return ChallengeScreen(challengeId: id);
+                        },
+                      ),
+                    ]),
               ],
             ),
           ],
         ),
-      ]);
-});
+         GoRoute(
+        path: '/signin',
+        builder: (context, state) => const SigninScreen(),
+      ),
+      GoRoute(
+        path: '/signup',
+        builder: (context, state) => const SignUpScreen(),
+      ),
+      ],
+    );
+  },
+);

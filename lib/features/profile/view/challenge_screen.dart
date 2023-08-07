@@ -178,12 +178,12 @@ class ChallengeScreen extends ConsumerWidget {
                           color: AppTheme.primaryColor,
                         ),
                       ),
-                      hintText: 'Write a comment',
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           color: AppTheme.subtitleColor,
                         ),
                       ),
+                      hintText: 'Write a comment',
                       hintStyle: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
