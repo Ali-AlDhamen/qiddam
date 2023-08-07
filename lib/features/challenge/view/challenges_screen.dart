@@ -6,7 +6,6 @@ import 'package:qiddam/features/challenge/view/widgets/callenge_card.dart';
 
 import '../../../core/common/aysnc_value_widget.dart';
 import '../../../models/challenge.dart';
-import '../../auth/controller/auth_controller.dart';
 
 class ChallengesScreen extends ConsumerWidget {
   const ChallengesScreen({super.key});

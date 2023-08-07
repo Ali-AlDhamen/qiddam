@@ -21,14 +21,14 @@ class ChallengeCard extends ConsumerWidget {
             .watch(getUserDataProvider(challenge.userId))
             .asData
             ?.value ??
-        UserModel(
+        const UserModel(
             email: "guest@guest.com",
             id: "11",
             name: "guest",
             photoUrl:
                 "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
             username: "guest");
-    ;
+    
     return InkWell(
       onTap: () {
         context.go('/challenge/${challenge.id}');

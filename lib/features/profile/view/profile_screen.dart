@@ -15,7 +15,6 @@ class ProfileScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final userId = ref.watch(userProvider)?.id ?? "1";
-    print(userId);
     final userChallenges = ref.watch(watchUserChallengesProvider(userId));
     return Scaffold(
       appBar: AppBar(
