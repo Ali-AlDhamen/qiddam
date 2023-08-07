@@ -67,7 +67,7 @@ class AuthRepository {
     }
   }
 
-   FutureEither<UserModel> signInWithEmail(
+  FutureEither<UserModel> signInWithEmail(
       {required String email, required String password}) async {
     try {
       UserCredential authResult = await _auth.signInWithEmailAndPassword(
@@ -84,10 +84,20 @@ class AuthRepository {
     }
   }
 
-   Stream<UserModel> getUserData(String uid) {
+  Stream<UserModel> getUserData(String uid) {
     return _users.doc(uid).snapshots().map((event) {
       return UserModel.fromJson(event.data() as Map<String, dynamic>);
     });
+  }
+
+  FutureVoid updateUserData(UserModel userModel) async {
+    try {
+      return Right(await _users.doc(userModel.id).update(userModel.toJson()));
+    } on FirebaseAuthException catch (e) {
+      return Left(Failure(e.toString()));
+    } catch (e) {
+      return Left(Failure(e.toString()));
+    }
   }
 
   void signOut() async {

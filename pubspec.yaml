@@ -45,6 +45,9 @@ dependencies:
   json_annotation: ^4.8.1
   fpdart: ^1.0.0
   uuid: ^3.0.7
+  url_launcher: ^6.1.12
+  file_picker: ^5.3.3
+  intl: ^0.18.1
 
 dev_dependencies:
   flutter_test:

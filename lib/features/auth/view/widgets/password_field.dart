@@ -27,14 +27,16 @@ class _PasswordFieldState extends State<PasswordField> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20 , vertical:10),
+      margin: const EdgeInsets.symmetric(horizontal: 20),
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-      height: 80,
+      height: 100,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
       ),
       child: TextFormField(
+        cursorColor: AppTheme.primaryColor,
+
         keyboardType: TextInputType.visiblePassword,
         scrollPadding: const EdgeInsets.only(bottom: 100),
         obscureText: !_passwordVisible,
@@ -50,6 +52,18 @@ class _PasswordFieldState extends State<PasswordField> {
               color: AppTheme.primaryColor,
             ),
             onPressed: togglePasswordIcon,
+          ),
+          errorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+            borderSide: const BorderSide(
+              color: Colors.red,
+            ),
+          ),
+          focusedErrorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+            borderSide: const BorderSide(
+              color: Colors.red,
+            ),
           ),
           hintText: "Password",
           focusedBorder: OutlineInputBorder(

@@ -4,12 +4,13 @@ import 'package:qiddam/core/common/loader_widget.dart';
 import 'package:qiddam/core/constants/app_sizes.dart';
 import 'package:qiddam/theme/app_theme.dart';
 
-import '../../controller/auth_controller.dart';
+import '../../../auth/controller/auth_controller.dart';
 
-class AuthButton extends ConsumerWidget {
-  final void Function(BuildContext) onPressed;
+class UpdateButton extends ConsumerWidget {
+  final void Function(BuildContext, WidgetRef) onPressed;
+
   final String text;
-  const AuthButton({
+  const UpdateButton({
     required this.onPressed,
     required this.text,
     Key? key,
@@ -28,7 +29,7 @@ class AuthButton extends ConsumerWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       child: TextButton(
-        onPressed: isLoading ? null : () => onPressed(context),
+        onPressed: isLoading ? null : () => onPressed(context, ref),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
