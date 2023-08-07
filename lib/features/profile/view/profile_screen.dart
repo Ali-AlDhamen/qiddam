@@ -5,6 +5,7 @@ import 'package:qiddam/features/profile/view/widgets/profile_information.dart';
 import 'package:qiddam/theme/app_theme.dart';
 
 import '../../../models/challenge.dart';
+import '../../auth/controller/auth_controller.dart';
 
 class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({super.key});
@@ -14,6 +15,14 @@ class ProfileScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profile'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              ref.read(authControllerProvider.notifier).signOut();
+            },
+            icon: const Icon(Icons.logout, color: AppTheme.primaryColor),
+          )
+        ],
       ),
       body: SafeArea(
         child: Center(

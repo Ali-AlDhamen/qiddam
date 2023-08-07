@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/constants/app_sizes.dart';
+import '../../../../models/user_model.dart';
 import '../../../auth/controller/auth_controller.dart';
 
 class ProfileInformation extends ConsumerWidget {
@@ -40,7 +41,7 @@ class ProfileInformation extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user = ref.watch(userProvider)!;
+    final user = ref.watch(userProvider) ??  const UserModel(email: "guest@guest.com" , id: "11" , name: "guest" , photoUrl: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" , username: "guest");
     print(user);
     return Column(
       children: [

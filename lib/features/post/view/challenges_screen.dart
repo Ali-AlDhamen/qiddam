@@ -16,7 +16,7 @@ class ChallengesScreen extends ConsumerWidget {
         // logout button
         child: ElevatedButton(
             onPressed: () {
-              ref.read(authControllerProvider.notifier).logout();
+              ref.read(authControllerProvider.notifier).signOut();
             },
             child: const Text('Logout')),
       ),
