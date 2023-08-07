@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:qiddam/features/post/view/challenges_screen.dart';
+import 'package:qiddam/features/challenge/view/challenges_screen.dart';
 import 'package:qiddam/features/profile/view/profile_screen.dart';
 import 'package:qiddam/features/profile/view/update_profile_screen.dart';
 
