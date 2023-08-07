@@ -100,8 +100,8 @@ class AuthController extends StateNotifier<bool> {
 
     if (newImage != null) {
       final imageUpload = await _storageRepository.storeFile(
-        path: 'users/${userModel.id}',
-        id: const Uuid().v4(),
+        path: 'users',
+        id: userModel.id,
         file: newImage,
       );
 

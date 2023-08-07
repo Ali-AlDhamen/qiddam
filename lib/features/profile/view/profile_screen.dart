@@ -42,7 +42,7 @@ class ProfileScreen extends ConsumerWidget {
                   ),
                 ),
               ),
-              ChallengeCard(
+              MyChallengeCard(
                 challenge: Challenge(
                   title: 'Challenge 1',
                   participants: const ["Ali", "Ahmed", "Hassan"],

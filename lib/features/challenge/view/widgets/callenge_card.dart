@@ -1,22 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:qiddam/features/auth/controller/auth_controller.dart';
 import 'package:qiddam/models/challenge.dart';
 
 import '../../../../core/constants/app_sizes.dart';
+import '../../../../models/user_model.dart';
 import '../../../../theme/app_theme.dart';
 
-class MyChallengeCard extends StatelessWidget {
+class ChallengeCard extends ConsumerWidget {
   final Challenge challenge;
-  const MyChallengeCard({
+  const ChallengeCard({
     super.key,
     required this.challenge,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref
+            .watch(getUserDataProvider(challenge.userId))
+            .asData
+            ?.value ??
+        UserModel(
+            email: "guest@guest.com",
+            id: "11",
+            name: "guest",
+            photoUrl:
+                "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+            username: "guest");
+    ;
     return InkWell(
-      onTap: (){
-        context.go('/profile/challenge/${challenge.id}');
+      onTap: () {
+        context.go('/challenge/${challenge.id}');
       },
       child: Container(
         height: 150,
@@ -36,7 +51,7 @@ class MyChallengeCard extends StatelessWidget {
         ),
         margin: const EdgeInsets.all(12),
         padding: const EdgeInsets.all(25),
-    
+
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -59,7 +74,25 @@ class MyChallengeCard extends StatelessWidget {
               ],
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                Row(
+                  children: [
+                    CircleAvatar(
+                      radius: 15,
+                      backgroundImage: NetworkImage(user.photoUrl!),
+                    ),
+                    gapW4,
+                    Text(
+                      user.name,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: AppTheme.subtitleColor,
+                      ),
+                    ),
+                  ],
+                ),
                 Row(
                   children: [
                     const Icon(
