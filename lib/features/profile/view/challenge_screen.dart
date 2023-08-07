@@ -10,7 +10,6 @@ class ChallengeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    print(challengeId);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -44,7 +43,7 @@ class ChallengeScreen extends ConsumerWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
@@ -62,7 +61,7 @@ class ChallengeScreen extends ConsumerWidget {
                     ),
                   ],
                 ),
-                Row(
+                const Row(
                   children: [
                     CircleAvatar(
                       radius: 15,
@@ -81,7 +80,7 @@ class ChallengeScreen extends ConsumerWidget {
                     ),
                   ],
                 ),
-                Row(
+                const Row(
                   children: [
                     Row(
                       children: [
@@ -129,7 +128,7 @@ class ChallengeScreen extends ConsumerWidget {
                 ),
 
                 // challenge description
-                Align(
+                const Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
                     'Challenge Description',
@@ -166,7 +165,7 @@ class ChallengeScreen extends ConsumerWidget {
                 Expanded(
                   child: TextField(
                     cursorColor: AppTheme.primaryColor,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
@@ -174,17 +173,17 @@ class ChallengeScreen extends ConsumerWidget {
                     decoration: InputDecoration(
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                           color: AppTheme.primaryColor,
                         ),
                       ),
-                      enabledBorder: OutlineInputBorder(
+                      enabledBorder: const OutlineInputBorder(
                         borderSide: BorderSide(
                           color: AppTheme.subtitleColor,
                         ),
                       ),
                       hintText: 'Write a comment',
-                      hintStyle: TextStyle(
+                      hintStyle: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
                         color: AppTheme.subtitleColor,
@@ -217,7 +216,7 @@ class ChallengeScreen extends ConsumerWidget {
               ),
               margin: const EdgeInsets.all(12),
               padding: const EdgeInsets.all(12),
-              child: Column(
+              child: const Column(
                 children: [
                   Row(
                     children: [

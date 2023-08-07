@@ -40,7 +40,7 @@ class _PasswordFieldState extends State<PasswordField> {
         obscureText: !_passwordVisible,
         controller: widget.controller,
         decoration: InputDecoration(
-          hintStyle: TextStyle(
+          hintStyle: const TextStyle(
             color: AppTheme.subtitleColor,
             fontSize: 14,
           ),
@@ -54,13 +54,13 @@ class _PasswordFieldState extends State<PasswordField> {
           hintText: "Password",
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
-            borderSide: BorderSide(
+            borderSide: const BorderSide(
               color: AppTheme.primaryColor,
             ),
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
-            borderSide: BorderSide(
+            borderSide: const BorderSide(
               color: AppTheme.subtitleColor,
             ),
           ),

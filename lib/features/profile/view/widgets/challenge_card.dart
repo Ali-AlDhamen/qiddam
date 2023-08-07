@@ -45,13 +45,13 @@ class ChallengeCard extends StatelessWidget {
               children: [
                 Text(
                   challenge.title,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                     color: AppTheme.cardTitleColor,
                   ),
                 ),
-                Icon(
+                const Icon(
                   Icons.arrow_forward_ios,
                   size: 25,
                   color: AppTheme.cardTitleColor,
@@ -62,7 +62,7 @@ class ChallengeCard extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.person_outline_outlined,
                       size: 25,
                       color: AppTheme.subtitleColor,
@@ -70,7 +70,7 @@ class ChallengeCard extends StatelessWidget {
                     gapW4,
                     Text(
                       '${challenge.participants.length} Participant',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: AppTheme.subtitleColor,

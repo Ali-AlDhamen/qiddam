@@ -25,7 +25,7 @@ class ProfileScreen extends ConsumerWidget {
 
                 // list of challenges
 
-                CircleAvatar(
+                const CircleAvatar(
                   radius: 50,
                   backgroundImage: NetworkImage(
                     'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
@@ -47,8 +47,8 @@ class ProfileScreen extends ConsumerWidget {
                     gapW12,
                     ElevatedButton(
                       onPressed: () {},
-                      child: Row(
-                        children: const [
+                      child: const Row(
+                        children: [
                           Text('Share'),
                           gapW4,
                           Icon(Icons.share),

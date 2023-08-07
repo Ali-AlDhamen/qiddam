@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:qiddam/core/constants/app_sizes.dart';
 import 'package:qiddam/core/utils/email_vaildator.dart';
 import 'package:qiddam/features/auth/view/widgets/auth_button.dart';
 import 'package:qiddam/features/auth/view/widgets/custom_textfield.dart';

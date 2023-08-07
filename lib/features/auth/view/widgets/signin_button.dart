@@ -22,7 +22,7 @@ class SigninButton extends StatelessWidget {
           onPressed: () {
             context.pop();
           },
-          child: Text(
+          child: const Text(
             "Sign In",
             style: TextStyle(
               color: AppTheme.primaryColor, 

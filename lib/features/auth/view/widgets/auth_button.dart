@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qiddam/core/common/loader_widget.dart';
 import 'package:qiddam/theme/app_theme.dart';
 
-import '../../controller/auth_controller.dart';
 
 class AuthButton extends ConsumerWidget {
   final void Function(BuildContext) onPressed;
@@ -28,12 +27,14 @@ class AuthButton extends ConsumerWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       child: TextButton(
+        // ignore: dead_code
         onPressed: false ? null : () => onPressed(context),
         child: false
+            // ignore: dead_code
             ? const LoaderWidget()
             :  Text(
                text,
-                style: TextStyle(
+                style: const TextStyle(
                   color: AppTheme.whiteColor,
                   fontSize: 18,
                   fontWeight: FontWeight.bold,

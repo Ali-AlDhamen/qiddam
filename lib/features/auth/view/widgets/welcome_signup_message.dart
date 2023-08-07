@@ -10,9 +10,9 @@ class WelcomeSignupMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       children: [
-        const SizedBox(
+        SizedBox(
           height: 40,
         ),
         Text(
@@ -23,7 +23,7 @@ class WelcomeSignupMessage extends StatelessWidget {
             color: AppTheme.primaryColor,
           ),
         ),
-        const SizedBox(
+        SizedBox(
           height: 10,
         ),
         Text(
@@ -33,7 +33,7 @@ class WelcomeSignupMessage extends StatelessWidget {
             color: AppTheme.subtitleColor,
           ),
         ),
-        const SizedBox(
+        SizedBox(
           height: 50,
         ),
       ],

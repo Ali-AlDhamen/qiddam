@@ -36,22 +36,22 @@ class CustomTextField extends StatelessWidget {
           hintText: hintText,
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
-            borderSide: BorderSide(
+            borderSide: const BorderSide(
               color: AppTheme.primaryColor,
             ),
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
-            borderSide: BorderSide(
+            borderSide: const BorderSide(
               color: AppTheme.subtitleColor,
             ),
           ),
-          hintStyle: TextStyle(
+          hintStyle: const TextStyle(
             color: AppTheme.subtitleColor,
             fontSize: 16,
           ),
           suffixText: extra, // Set the suffix text
-          suffixStyle: TextStyle(
+          suffixStyle: const TextStyle(
             color: AppTheme.subtitleColor,
             fontSize: 16,
           ),

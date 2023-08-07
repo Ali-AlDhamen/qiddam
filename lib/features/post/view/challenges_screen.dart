@@ -18,7 +18,7 @@ class ChallengesScreen extends ConsumerWidget {
             onPressed: () {
               ref.read(authControllerProvider.notifier).logout();
             },
-            child: Text('Logout')),
+            child: const Text('Logout')),
       ),
     );
   }

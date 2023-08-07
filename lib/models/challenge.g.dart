@@ -6,6 +6,7 @@ part of 'challenge.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+// ignore: non_constant_identifier_names
 _$_Challenge _$$_ChallengeFromJson(Map<String, dynamic> json) => _$_Challenge(
       participants: (json['participants'] as List<dynamic>)
           .map((e) => e as String)
@@ -18,6 +19,7 @@ _$_Challenge _$$_ChallengeFromJson(Map<String, dynamic> json) => _$_Challenge(
       days: json['days'] as int,
     );
 
+// ignore: non_constant_identifier_names
 Map<String, dynamic> _$$_ChallengeToJson(_$_Challenge instance) =>
     <String, dynamic>{
       'participants': instance.participants,

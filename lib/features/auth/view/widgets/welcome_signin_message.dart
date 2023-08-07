@@ -8,7 +8,7 @@ class WelcomeSignInMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       children: [
         gapH64,
         Text(

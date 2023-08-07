@@ -15,14 +15,14 @@ class SignupButton extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text("Don't have an account?",
+        const Text("Don't have an account?",
             style: TextStyle(
               fontSize: 16,
               color: AppTheme.subtitleColor,
             )),
         TextButton(
           onPressed: () => navigateToSignupPage(context),
-          child: Text(
+          child: const Text(
             "Sign Up",
             style: TextStyle(
               color: AppTheme.primaryColor,
