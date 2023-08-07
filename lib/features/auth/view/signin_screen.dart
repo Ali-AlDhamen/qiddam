@@ -22,14 +22,14 @@ class _SigninScreenState extends ConsumerState<SigninScreen> {
 
   final formKey = GlobalKey<FormState>();
 
-  // void signInWithEmail(BuildContext context) {
-  //   if (formKey.currentState!.validate()) {
-  //     ref.read(authControllerProvider.notifier).signInWithEmail(
-  //         email: _emailController.text.trim(),
-  //         password: _passwordController.text.trim(),
-  //         context: context);
-  //   }
-  // }
+  void signInWithEmail(BuildContext context) {
+    if (formKey.currentState!.validate()) {
+      ref.read(authControllerProvider.notifier).signInWithEmail(
+          email: _emailController.text.trim(),
+          password: _passwordController.text.trim(),
+          context: context);
+    }
+  }
 
   @override
   void dispose() {
@@ -66,7 +66,7 @@ class _SigninScreenState extends ConsumerState<SigninScreen> {
                   ),
                 ),
                 AuthButton(
-                    onPressed: (BuildContext context) {}, text: "Sign In"),
+                    onPressed: signInWithEmail, text: "Sign In"),
                 const SignupButton(),
               ],
             ),

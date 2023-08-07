@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:qiddam/features/post/view/challenges_screen.dart';
 import 'package:qiddam/features/profile/view/profile_screen.dart';
 
+import '../features/auth/controller/auth_controller.dart';
 import '../features/auth/view/signin_screen.dart';
 import '../features/auth/view/signup_screen.dart';
 import '../features/home/view/home_screen.dart';
@@ -20,8 +21,7 @@ final routeProvier = Provider<GoRouter>(
 
     return GoRouter(
       debugLogDiagnostics: true,
-      initialLocation: '/signin',
-      // refreshListenable: GoRouterRefreshStream(auth.authStateChange),
+      initialLocation: ref.read(authControllerProvider.notifier).initalPath(),
       navigatorKey: _rootNavigatorKey,
       routes: [
         StatefulShellRoute.indexedStack(
@@ -62,15 +62,31 @@ final routeProvier = Provider<GoRouter>(
             ),
           ],
         ),
-         GoRoute(
-        path: '/signin',
-        builder: (context, state) => const SigninScreen(),
-      ),
-      GoRoute(
-        path: '/signup',
-        builder: (context, state) => const SignUpScreen(),
-      ),
+        GoRoute(
+          path: '/signin',
+          builder: (context, state) => const SigninScreen(),
+        ),
+        GoRoute(
+          path: '/signup',
+          builder: (context, state) => const SignUpScreen(),
+        ),
       ],
+      redirect: (context, state) {
+        final userIsLogging = state.uri.toString() == '/signin' ||
+            state.uri.toString() == '/signup';
+        bool userIsLoggedIn = false;
+        ref.watch(authStateChangeProvider).whenData((value) {
+          userIsLoggedIn = value != null;
+        });
+
+        if (userIsLogging && userIsLoggedIn) {
+          return '/';
+        } else if (!userIsLogging && !userIsLoggedIn) {
+          return '/signin';
+        } else {
+          return null;
+        }
+      },
     );
   },
 );

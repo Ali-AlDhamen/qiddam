@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../auth/controller/auth_controller.dart';
+
 class ChallengesScreen extends ConsumerWidget {
   const ChallengesScreen({super.key});
 
@@ -10,8 +12,13 @@ class ChallengesScreen extends ConsumerWidget {
       appBar: AppBar(
         title: const Text('Challenges'),
       ),
-      body: const Center(
-        child: Text('Challenges'),
+      body: Center(
+        // logout button
+        child: ElevatedButton(
+            onPressed: () {
+              ref.read(authControllerProvider.notifier).logout();
+            },
+            child: Text('Logout')),
       ),
     );
   }
