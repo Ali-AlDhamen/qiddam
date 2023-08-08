@@ -10,7 +10,10 @@ import '../../../../models/user_model.dart';
 import '../../../auth/controller/auth_controller.dart';
 
 class ProfileInformation extends ConsumerWidget {
-  const ProfileInformation({super.key});
+  final String userId;
+  final String currentUserId;
+  const ProfileInformation(
+      {super.key, required this.userId, required this.currentUserId});
 
   void copyUserLink(String name, BuildContext context) async {
     await Clipboard.setData(ClipboardData(text: "$name.qiddam.com"));
@@ -30,7 +33,7 @@ class ProfileInformation extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user = ref.watch(userProvider) ??
+    final user = ref.watch(getUserDataProvider(userId)).asData?.value ??
         const UserModel(
             email: "guest@guest.com",
             id: "11",
@@ -63,26 +66,28 @@ class ProfileInformation extends ConsumerWidget {
           ),
         ),
         gapH12,
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              onPressed: () => navigateToEditProfile(context),
-              child: const Text('Edit Profile'),
-            ),
-            gapW12,
-            ElevatedButton(
-              onPressed: () => copyUserLink(user.name, context),
-              child: const Row(
+        currentUserId == userId
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Share'),
-                  gapW4,
-                  Icon(Icons.share),
+                  ElevatedButton(
+                    onPressed: () => navigateToEditProfile(context),
+                    child: const Text('Edit Profile'),
+                  ),
+                  gapW12,
+                  ElevatedButton(
+                    onPressed: () => copyUserLink(user.name, context),
+                    child: const Row(
+                      children: [
+                        Text('Share'),
+                        gapW4,
+                        Icon(Icons.share),
+                      ],
+                    ),
+                  ),
                 ],
-              ),
-            ),
-          ],
-        ),
+              )
+            : const SizedBox(),
 
         gapH12,
         // divider

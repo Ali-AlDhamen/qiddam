@@ -73,45 +73,50 @@ class ChallengeCard extends ConsumerWidget {
                 ),
               ],
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    CircleAvatar(
-                      radius: 15,
-                      backgroundImage: NetworkImage(user.photoUrl!),
-                    ),
-                    gapW4,
-                    Text(
-                      user.name,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+            InkWell(
+              onTap: (){
+                context.go('/profile/${user.id}');
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      CircleAvatar(
+                        radius: 15,
+                        backgroundImage: NetworkImage(user.photoUrl!),
+                      ),
+                      gapW4,
+                      Text(
+                        user.name,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: AppTheme.subtitleColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      const Icon(
+                        Icons.person_outline_outlined,
+                        size: 25,
                         color: AppTheme.subtitleColor,
                       ),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    const Icon(
-                      Icons.person_outline_outlined,
-                      size: 25,
-                      color: AppTheme.subtitleColor,
-                    ),
-                    gapW4,
-                    Text(
-                      '${challenge.participants.length} Participant',
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: AppTheme.subtitleColor,
+                      gapW4,
+                      Text(
+                        '${challenge.participants.length} Participant',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: AppTheme.subtitleColor,
+                        ),
                       ),
-                    ),
-                  ],
-                )
-              ],
+                    ],
+                  )
+                ],
+              ),
             )
           ],
         ),

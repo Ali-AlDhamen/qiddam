@@ -10,7 +10,7 @@ import '../features/auth/view/signin_screen.dart';
 import '../features/auth/view/signup_screen.dart';
 import '../features/challenge/view/create_challenge_screen.dart';
 import '../features/home/view/home_screen.dart';
-import '../features/profile/view/challenge_screen.dart';
+import '../features/challenge/view/challenge_screen.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _shellNavigatorHomeKey = GlobalKey<NavigatorState>(debugLabel: 'home');
@@ -34,28 +34,36 @@ final routeProvier = Provider<GoRouter>(
               navigatorKey: _shellNavigatorHomeKey,
               routes: [
                 GoRoute(
-                    path: '/',
-                    builder: (context, state) {
-                      return const ChallengesScreen();
-                    },
-                    routes: [
-                      GoRoute(
-                        path: 'challenge/:id',
+                  path: '/',
+                  builder: (context, state) {
+                    return const ChallengesScreen();
+                  },
+                  routes: [
+                    GoRoute(
+                      path: 'challenge/:id',
+                      builder: (context, state) {
+                        final String id = state.pathParameters['id']!;
+                        return ChallengeScreen(challengeId: id);
+                      },
+                    ),
+                    GoRoute(
+                      path: 'create-challenge',
+                      pageBuilder: (context, state) {
+                        return MaterialPage(
+                          fullscreenDialog: true,
+                          child: CreateChallengeScreen(),
+                        );
+                      },
+                    ),
+                     GoRoute(
+                        path: 'profile/:id',
                         builder: (context, state) {
                           final String id = state.pathParameters['id']!;
-                          return ChallengeScreen(challengeId: id);
+                          return ProfileScreen(id: id);
                         },
                       ),
-                      GoRoute(
-                        path: 'create-challenge',
-                        pageBuilder: (context, state) {
-                          return MaterialPage(
-                            fullscreenDialog: true,
-                            child:  CreateChallengeScreen(),
-                          );
-                        },
-                      )
-                    ]),
+                  ],
+                ),
               ],
             ),
             StatefulShellBranch(

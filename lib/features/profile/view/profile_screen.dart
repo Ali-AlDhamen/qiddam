@@ -1,7 +1,10 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+
 import 'package:qiddam/features/challenge/controller/challenge_controller.dart';
-import 'package:qiddam/features/profile/view/widgets/challenge_card.dart';
+import 'package:qiddam/features/profile/view/widgets/my_challenge_card.dart';
 import 'package:qiddam/features/profile/view/widgets/profile_information.dart';
 import 'package:qiddam/theme/app_theme.dart';
 
@@ -10,29 +13,48 @@ import '../../../models/challenge.dart';
 import '../../auth/controller/auth_controller.dart';
 
 class ProfileScreen extends ConsumerWidget {
-  const ProfileScreen({super.key});
+  final String? id;
+  const ProfileScreen({
+    super.key,
+    this.id,
+  });
+
+  void logout(WidgetRef ref) {
+    ref.read(authControllerProvider.notifier).signOut();
+  }
+
+  String getProfileUserId(BuildContext context, WidgetRef ref) {
+    if (GoRouterState.of(context).uri.toString() == "/profile") {
+      return ref.read(userProvider)?.id ?? "1";
+    }
+    return id ?? "1";
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final userId = ref.watch(userProvider)?.id ?? "1";
+    final userId = getProfileUserId(context, ref);
+    final currentUserId = ref.read(userProvider)?.id ?? "1";
     final userChallenges = ref.watch(watchUserChallengesProvider(userId));
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profile'),
         actions: [
-          IconButton(
-            onPressed: () {
-              ref.read(authControllerProvider.notifier).signOut();
-            },
-            icon: const Icon(Icons.logout, color: AppTheme.primaryColor),
-          )
+          currentUserId == userId
+              ? IconButton(
+                  onPressed: () => logout(ref),
+                  icon: const Icon(Icons.logout, color: AppTheme.primaryColor),
+                )
+              : const SizedBox(),
         ],
       ),
       body: SafeArea(
         child: Center(
           child: Column(
             children: [
-              const ProfileInformation(),
+              ProfileInformation(
+                userId: userId,
+                currentUserId: currentUserId
+              ),
               const Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(

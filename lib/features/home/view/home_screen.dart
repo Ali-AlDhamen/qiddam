@@ -4,7 +4,6 @@ import 'package:qiddam/features/home/view/widgets/active_icon.dart';
 
 import '../../../theme/app_theme.dart';
 
-
 class HomeScreen extends StatelessWidget {
   const HomeScreen({
     Key? key,

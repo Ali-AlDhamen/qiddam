@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:qiddam/core/common/aysnc_value_widget.dart';
 import 'package:qiddam/core/common/loader_widget.dart';
 import 'package:qiddam/core/constants/app_sizes.dart';
@@ -91,24 +92,29 @@ class ChallengeScreen extends ConsumerWidget {
                           ),
                         ],
                       ),
-                      Row(
-                        children: [
-                          CircleAvatar(
-                            radius: 15,
-                            backgroundImage: NetworkImage(
-                              user.photoUrl!,
+                      InkWell(
+                        onTap: () {
+                          context.go('/profile/${user.id}');
+                        },
+                        child: Row(
+                          children: [
+                            CircleAvatar(
+                              radius: 15,
+                              backgroundImage: NetworkImage(
+                                user.photoUrl!,
+                              ),
                             ),
-                          ),
-                          gapW12,
-                          Text(
-                            user.name,
-                            style: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                              color: AppTheme.subtitleColor,
+                            gapW12,
+                            Text(
+                              user.name,
+                              style: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                color: AppTheme.subtitleColor,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                       Row(
                         children: [
@@ -153,8 +159,23 @@ class ChallengeScreen extends ConsumerWidget {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: ElevatedButton(
-                          onPressed: () {},
-                          child: const Text('Complete Challenge'),
+                          onPressed: () {
+                            if (challenge.participants
+                                .contains(ref.read(userProvider)?.id)) {
+                              return;
+                            } else {
+                              ref
+                                  .read(challengeControllerProvider.notifier)
+                                  .joinChallenge(
+                                    challengeId: challenge.id,
+                                    context: context,
+                                  );
+                            }
+                          },
+                          child: challenge.participants
+                                  .contains(ref.read(userProvider)?.id)
+                              ? const Text("You are In")
+                              : const Text('Qiddam!'),
                         ),
                       ),
                       Align(
@@ -276,37 +297,44 @@ class ChallengeScreen extends ConsumerWidget {
                         padding: const EdgeInsets.all(12),
                         child: Column(
                           children: [
-                            Row(
-                              children: [
-                                CircleAvatar(
-                                  radius: 20,
-                                  backgroundImage: NetworkImage(
-                                    user.photoUrl!,
+                            InkWell(
+                              onTap: () {
+                                context.go('/profile/${user.id}');
+                              },
+                              child: Row(
+                                children: [
+                                  CircleAvatar(
+                                    radius: 20,
+                                    backgroundImage: NetworkImage(
+                                      user.photoUrl!,
+                                    ),
                                   ),
-                                ),
-                                gapW8,
-                                Column(
-                                  children: [
-                                    Text(
-                                      user.name,
-                                      style: const TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                        color: AppTheme.cardTitleColor,
+                                  gapW8,
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        user.name,
+                                        style: const TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                          color: AppTheme.cardTitleColor,
+                                        ),
                                       ),
-                                    ),
-                                    gapH4,
-                                    Text(
-                                      user.username!,
-                                      style: const TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                        color: AppTheme.subtitleColor,
+                                      gapH4,
+                                      Text(
+                                        "@${user.username!}",
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: AppTheme.subtitleColor,
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                )
-                              ],
+                                    ],
+                                  )
+                                ],
+                              ),
                             ),
                             gapH8,
                             Align(
