@@ -3,13 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import 'package:qiddam/features/challenge/controller/challenge_controller.dart';
-import 'package:qiddam/features/profile/view/widgets/my_challenge_card.dart';
+import 'package:qiddam/features/profile/view/widgets/my_challenges.dart';
 import 'package:qiddam/features/profile/view/widgets/profile_information.dart';
 import 'package:qiddam/theme/app_theme.dart';
 
-import '../../../core/common/aysnc_value_widget.dart';
-import '../../../models/challenge.dart';
 import '../../auth/controller/auth_controller.dart';
 
 class ProfileScreen extends ConsumerWidget {
@@ -25,16 +22,15 @@ class ProfileScreen extends ConsumerWidget {
 
   String getProfileUserId(BuildContext context, WidgetRef ref) {
     if (GoRouterState.of(context).uri.toString() == "/profile") {
-      return ref.read(userProvider)?.id ?? "1";
+      return ref.read(userProvider)?.id ?? "";
     }
-    return id ?? "1";
+    return id ?? "";
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final userId = getProfileUserId(context, ref);
-    final currentUserId = ref.read(userProvider)?.id ?? "1";
-    final userChallenges = ref.watch(watchUserChallengesProvider(userId));
+    final currentUserId = ref.read(userProvider)?.id ?? "";
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profile'),
@@ -51,10 +47,7 @@ class ProfileScreen extends ConsumerWidget {
         child: Center(
           child: Column(
             children: [
-              ProfileInformation(
-                userId: userId,
-                currentUserId: currentUserId
-              ),
+              ProfileInformation(userId: userId, currentUserId: currentUserId),
               const Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
@@ -68,23 +61,7 @@ class ProfileScreen extends ConsumerWidget {
                   ),
                 ),
               ),
-              AsyncValueWidget<List<Challenge>>(
-                value: userChallenges,
-                data: (challenges) {
-                  if (challenges.isEmpty) {
-                    return const Center(child: Text('No Challenges'));
-                  }
-                  return Expanded(
-                    child: ListView.builder(
-                      itemCount: challenges.length,
-                      itemBuilder: (context, index) {
-                        final challenge = challenges[index];
-                        return MyChallengeCard(challenge: challenge);
-                      },
-                    ),
-                  );
-                },
-              ),
+              MyChallenges(userId: userId),
             ],
           ),
         ),

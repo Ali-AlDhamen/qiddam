@@ -26,7 +26,6 @@ final routeProvier = Provider<GoRouter>(
       routes: [
         StatefulShellRoute.indexedStack(
           builder: (context, state, navigationShell) {
-            // the UI shell
             return HomeScreen(navigationShell: navigationShell);
           },
           branches: [
@@ -34,7 +33,7 @@ final routeProvier = Provider<GoRouter>(
               navigatorKey: _shellNavigatorHomeKey,
               routes: [
                 GoRoute(
-                  path: '/',
+                  path: '/home',
                   builder: (context, state) {
                     return const ChallengesScreen();
                   },
@@ -55,13 +54,13 @@ final routeProvier = Provider<GoRouter>(
                         );
                       },
                     ),
-                     GoRoute(
-                        path: 'profile/:id',
-                        builder: (context, state) {
-                          final String id = state.pathParameters['id']!;
-                          return ProfileScreen(id: id);
-                        },
-                      ),
+                    GoRoute(
+                      path: 'profile/:id',
+                      builder: (context, state) {
+                        final String id = state.pathParameters['id']!;
+                        return ProfileScreen(id: id);
+                      },
+                    ),
                   ],
                 ),
               ],
@@ -82,8 +81,8 @@ final routeProvier = Provider<GoRouter>(
                         return ChallengeScreen(challengeId: id);
                       },
                     ),
-                    // update profile
                     GoRoute(
+                      name: "update",
                       path: 'update',
                       builder: (context, state) {
                         return const UpdateProfileScreen();

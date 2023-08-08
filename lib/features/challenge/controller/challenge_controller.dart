@@ -44,6 +44,7 @@ final watchChallengeProvider =
 class ChallengeController extends StateNotifier<bool> {
   final ChallengeRepository _challengeRepository;
   final Ref _ref;
+  // ignore: unused_field
   final StorageRepository _storageRepository;
   ChallengeController(
       {required ChallengeRepository challengeRepository,

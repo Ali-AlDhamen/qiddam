@@ -10,12 +10,13 @@ import 'firebase_options.dart';
 import 'package:stack_trace/stack_trace.dart' as stack_trace;
 
 import 'models/user_model.dart';
+
 void main() async {
-   WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp( ProviderScope(child: MyApp()));
+  runApp(const ProviderScope(child: MyApp()));
   FlutterError.demangleStackTrace = (StackTrace stack) {
     if (stack is stack_trace.Trace) return stack.vmTrace;
     if (stack is stack_trace.Chain) return stack.toTrace().vmTrace;
@@ -23,14 +24,11 @@ void main() async {
   };
 }
 
-// ignore: must_be_immutable
 class MyApp extends ConsumerWidget {
-  MyApp({super.key});
-
-  UserModel? userModel;
+  const MyApp({super.key});
 
   void getData(WidgetRef ref, User data) async {
-    userModel = await ref
+    UserModel? userModel = await ref
         .watch(authControllerProvider.notifier)
         .getUserData(data.uid)
         .first;

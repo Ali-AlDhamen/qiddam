@@ -35,12 +35,13 @@ class ProfileInformation extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(getUserDataProvider(userId)).asData?.value ??
         const UserModel(
-            email: "guest@guest.com",
-            id: "11",
-            name: "guest",
-            photoUrl:
-                "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
-            username: "guest");
+          email: "guest@guest.com",
+          id: "11",
+          name: "guest",
+          photoUrl:
+              "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+          username: "guest",
+        );
     return Column(
       children: [
         CircleAvatar(

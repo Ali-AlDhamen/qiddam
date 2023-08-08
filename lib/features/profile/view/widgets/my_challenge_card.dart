@@ -12,16 +12,17 @@ class MyChallengeCard extends StatelessWidget {
     required this.challenge,
   });
 
+  void navigateToChallengeDetails(BuildContext context) {
+    context.go('/profile/challenge/${challenge.id}');
+  }
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){
-        context.go('/profile/challenge/${challenge.id}');
-      },
+      onTap: () => navigateToChallengeDetails(context),
       child: Container(
         height: 150,
         width: double.infinity,
-        // shadow
         decoration: BoxDecoration(
           color: Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(8),
@@ -30,13 +31,12 @@ class MyChallengeCard extends StatelessWidget {
               color: Colors.grey.withOpacity(0.2),
               spreadRadius: 2,
               blurRadius: 2,
-              offset: const Offset(0, 2), // changes position of shadow
+              offset: const Offset(0, 2),
             ),
           ],
         ),
         margin: const EdgeInsets.all(12),
         padding: const EdgeInsets.all(25),
-    
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

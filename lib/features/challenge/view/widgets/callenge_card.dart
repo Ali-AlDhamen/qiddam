@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:qiddam/features/auth/controller/auth_controller.dart';
+import 'package:qiddam/features/challenge/view/widgets/user_details_widget.dart';
 import 'package:qiddam/models/challenge.dart';
 
 import '../../../../core/constants/app_sizes.dart';
@@ -28,10 +29,10 @@ class ChallengeCard extends ConsumerWidget {
             photoUrl:
                 "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
             username: "guest");
-    
+
     return InkWell(
       onTap: () {
-        context.go('/challenge/${challenge.id}');
+        context.go('/home/challenge/${challenge.id}');
       },
       child: Container(
         height: 150,
@@ -73,50 +74,31 @@ class ChallengeCard extends ConsumerWidget {
                 ),
               ],
             ),
-            InkWell(
-              onTap: (){
-                context.go('/profile/${user.id}');
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      CircleAvatar(
-                        radius: 15,
-                        backgroundImage: NetworkImage(user.photoUrl!),
-                      ),
-                      gapW4,
-                      Text(
-                        user.name,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: AppTheme.subtitleColor,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.person_outline_outlined,
-                        size: 25,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                UserDetailsWidget(
+                  user: user,
+                ),
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.person_outline_outlined,
+                      size: 25,
+                      color: AppTheme.subtitleColor,
+                    ),
+                    gapW4,
+                    Text(
+                      '${challenge.participants.length} Participant',
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
                         color: AppTheme.subtitleColor,
                       ),
-                      gapW4,
-                      Text(
-                        '${challenge.participants.length} Participant',
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: AppTheme.subtitleColor,
-                        ),
-                      ),
-                    ],
-                  )
-                ],
-              ),
+                    ),
+                  ],
+                )
+              ],
             )
           ],
         ),

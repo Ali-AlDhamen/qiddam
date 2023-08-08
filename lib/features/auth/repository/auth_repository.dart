@@ -32,7 +32,7 @@ class AuthRepository {
 
   String initalPath() {
     if (_auth.currentUser != null) {
-      return '/';
+      return '/home';
     } else {
       return '/signin';
     }
