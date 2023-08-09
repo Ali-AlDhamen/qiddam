@@ -15,14 +15,30 @@ import '../features/challenge/view/challenge_screen.dart';
 final routeProvier = Provider<GoRouter>(
   (ref) {
     final rootNavigatorKey = GlobalKey<NavigatorState>();
-    final shellNavigatorHomeKey =
-        GlobalKey<NavigatorState>(debugLabel: 'home');
+    final shellNavigatorHomeKey = GlobalKey<NavigatorState>(debugLabel: 'home');
     final shellNavigatorProfileKey =
         GlobalKey<NavigatorState>(debugLabel: 'profile');
+
     return GoRouter(
       debugLogDiagnostics: true,
       initialLocation: ref.read(authControllerProvider.notifier).initalPath(),
       navigatorKey: rootNavigatorKey,
+      redirect: (context, state) {
+        final userIsLogging = state.uri.toString() == '/signin' ||
+            state.uri.toString() == '/signup';
+        bool userIsLoggedIn = false;
+        ref.watch(authStateChangeProvider).whenData((value) {
+          userIsLoggedIn = value != null;
+        });
+
+        if (userIsLogging && userIsLoggedIn) {
+          return '/';
+        } else if (!userIsLogging && !userIsLoggedIn) {
+          return '/signin';
+        } else {
+          return null;
+        }
+      },
       routes: [
         StatefulShellRoute.indexedStack(
           builder: (context, state, navigationShell) {
@@ -103,22 +119,6 @@ final routeProvier = Provider<GoRouter>(
           builder: (context, state) => const SignUpScreen(),
         ),
       ],
-      redirect: (context, state) {
-        final userIsLogging = state.uri.toString() == '/signin' ||
-            state.uri.toString() == '/signup';
-        bool userIsLoggedIn = false;
-        ref.watch(authStateChangeProvider).whenData((value) {
-          userIsLoggedIn = value != null;
-        });
-
-        if (userIsLogging && userIsLoggedIn) {
-          return '/';
-        } else if (!userIsLogging && !userIsLoggedIn) {
-          return '/signin';
-        } else {
-          return null;
-        }
-      },
     );
   },
 );

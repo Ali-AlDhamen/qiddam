@@ -11,9 +11,16 @@ include: package:flutter_lints/flutter.yaml
 
 
 analyzer:
+  plugins:
+    - custom_lint
   errors:
     invalid_annotation_target: ignore
 
+custom_lint:
+  enable_all_lint_rules: false
+  rules:
+    # You can now enable one specific rule in the "rules" list
+    - missing_provider_scope
 linter:
   # The lint rules applied to this project can be customized in the
   # section below to disable rules from the `package:flutter_lints/flutter.yaml`
