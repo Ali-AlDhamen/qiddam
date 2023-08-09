@@ -24,6 +24,7 @@ class ProfileScreen extends ConsumerWidget {
     if (GoRouterState.of(context).uri.toString() == "/profile") {
       return ref.read(userProvider)?.id ?? "";
     }
+
     return id ?? "";
   }
 

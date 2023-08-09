@@ -12,17 +12,17 @@ import '../features/challenge/view/create_challenge_screen.dart';
 import '../features/home/view/home_screen.dart';
 import '../features/challenge/view/challenge_screen.dart';
 
-final _rootNavigatorKey = GlobalKey<NavigatorState>();
-final _shellNavigatorHomeKey = GlobalKey<NavigatorState>(debugLabel: 'home');
-final _shellNavigatorProfileKey =
-    GlobalKey<NavigatorState>(debugLabel: 'profile');
-
 final routeProvier = Provider<GoRouter>(
   (ref) {
+    final rootNavigatorKey = GlobalKey<NavigatorState>();
+    final shellNavigatorHomeKey =
+        GlobalKey<NavigatorState>(debugLabel: 'home');
+    final shellNavigatorProfileKey =
+        GlobalKey<NavigatorState>(debugLabel: 'profile');
     return GoRouter(
       debugLogDiagnostics: true,
       initialLocation: ref.read(authControllerProvider.notifier).initalPath(),
-      navigatorKey: _rootNavigatorKey,
+      navigatorKey: rootNavigatorKey,
       routes: [
         StatefulShellRoute.indexedStack(
           builder: (context, state, navigationShell) {
@@ -30,7 +30,7 @@ final routeProvier = Provider<GoRouter>(
           },
           branches: [
             StatefulShellBranch(
-              navigatorKey: _shellNavigatorHomeKey,
+              navigatorKey: shellNavigatorHomeKey,
               routes: [
                 GoRoute(
                   path: '/home',
@@ -66,7 +66,7 @@ final routeProvier = Provider<GoRouter>(
               ],
             ),
             StatefulShellBranch(
-              navigatorKey: _shellNavigatorProfileKey,
+              navigatorKey: shellNavigatorProfileKey,
               routes: [
                 GoRoute(
                   path: '/profile',
