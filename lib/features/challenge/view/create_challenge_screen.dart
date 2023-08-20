@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qiddam/core/constants/app_sizes.dart';
@@ -8,9 +9,15 @@ import 'package:qiddam/features/challenge/view/widgets/create_button.dart';
 
 import '../controller/challenge_controller.dart';
 
-class CreateChallengeScreen extends ConsumerWidget {
-  CreateChallengeScreen({super.key});
+class CreateChallengeScreen extends ConsumerStatefulWidget {
+  const CreateChallengeScreen({super.key});
 
+  @override
+  ConsumerState<CreateChallengeScreen> createState() =>
+      _CreateChallengeScreenState();
+}
+
+class _CreateChallengeScreenState extends ConsumerState<CreateChallengeScreen> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _daysController = TextEditingController();
@@ -28,8 +35,22 @@ class CreateChallengeScreen extends ConsumerWidget {
     }
   }
 
+  void setUpPushNotifications() async {
+    final fcm = FirebaseMessaging.instance;
+    await fcm.requestPermission();
+    final token = await fcm.getToken();
+    fcm.subscribeToTopic('challenges');
+    print(token);
+  }
+
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  void initState() {
+    super.initState();
+    setUpPushNotifications();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Create Challenge'),
