@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
 
 import '../../../core/constants/firebase_constants.dart';
+import '../../../core/exceptions/fireauth_exceptions.dart';
 import '../../../core/providers/firebase_providers.dart';
 import '../../../core/types/failure.dart';
 import '../../../core/types/future_either.dart';
@@ -61,7 +62,7 @@ class AuthRepository {
 
       return Right(userModel);
     } on FirebaseException catch (e) {
-      return Left(Failure(e.toString()));
+      return Left(Failure(handleAuthException(e.code)));
     } catch (e) {
       return Left(Failure(e.toString()));
     }
@@ -78,7 +79,7 @@ class AuthRepository {
 
       return Right(userModel);
     } on FirebaseAuthException catch (e) {
-      return Left(Failure(e.toString()));
+      return Left(Failure(handleAuthException(e.code)));
     } catch (e) {
       return Left(Failure(e.toString()));
     }
@@ -94,7 +95,8 @@ class AuthRepository {
     try {
       return Right(await _users.doc(userModel.id).update(userModel.toJson()));
     } on FirebaseAuthException catch (e) {
-      return Left(Failure(e.toString()));
+            return Left(Failure(handleAuthException(e.code)));
+
     } catch (e) {
       return Left(Failure(e.toString()));
     }
