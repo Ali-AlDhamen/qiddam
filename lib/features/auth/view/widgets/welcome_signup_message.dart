@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qiddam/core/constants/app_sizes.dart';
 
 import '../../../../theme/app_theme.dart';
 
@@ -12,9 +13,7 @@ class WelcomeSignupMessage extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Column(
       children: [
-        SizedBox(
-          height: 40,
-        ),
+       gapH64,
         Text(
           "Create Account!",
           style: TextStyle(
