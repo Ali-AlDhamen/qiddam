@@ -21,12 +21,12 @@ class _SigninScreenState extends ConsumerState<SigninScreen> {
 
   final formKey = GlobalKey<FormState>();
 
-  void signInWithEmail(BuildContext context) {
+  void signInWithEmail() {
     if (formKey.currentState!.validate()) {
       ref.read(authControllerProvider.notifier).signInWithEmail(
-          email: _emailController.text.trim(),
-          password: _passwordController.text.trim(),
-          context: context);
+            email: _emailController.text.trim(),
+            password: _passwordController.text.trim(),
+          );
     }
   }
 

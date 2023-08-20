@@ -1,9 +1,7 @@
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../core/providers/storage_provider.dart';
 import '../../../models/user_model.dart';
@@ -58,7 +56,6 @@ class AuthController extends StateNotifier<AsyncValue<void>> {
     required String password,
     required String username,
     required String name,
-    required BuildContext context,
   }) async {
     state = const AsyncLoading();
     final user = await _authRepository.signUpWithEmail(
@@ -75,7 +72,6 @@ class AuthController extends StateNotifier<AsyncValue<void>> {
   void signInWithEmail({
     required String email,
     required String password,
-    required BuildContext context,
   }) async {
     state = const AsyncLoading();
     final user =
@@ -94,7 +90,6 @@ class AuthController extends StateNotifier<AsyncValue<void>> {
   void updateUserData({
     required String newName,
     required File? newImage,
-    required BuildContext context,
   }) async {
     state = const AsyncLoading();
 
@@ -130,7 +125,6 @@ class AuthController extends StateNotifier<AsyncValue<void>> {
       },
       (r) {
         _ref.read(userProvider.notifier).update((state) => newUserModel);
-        context.pop();
       },
     );
     state = const AsyncData(null);

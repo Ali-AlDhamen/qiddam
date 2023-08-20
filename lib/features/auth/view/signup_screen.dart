@@ -25,14 +25,13 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
 
   final formKey = GlobalKey<FormState>();
 
-  void signUpWithEmail(BuildContext context) {
+  void signUpWithEmail() {
     if (formKey.currentState!.validate()) {
       ref.read(authControllerProvider.notifier).signUpWithEmail(
             email: _emailController.text.trim(),
             password: _passwordController.text.trim(),
             username: _usernameController.text.trim(),
             name: _nameController.text.trim(),
-            context: context,
           );
     }
   }

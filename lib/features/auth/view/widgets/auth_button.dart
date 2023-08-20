@@ -8,7 +8,7 @@ import 'package:qiddam/theme/app_theme.dart';
 import '../../controller/auth_controller.dart';
 
 class AuthButton extends ConsumerWidget {
-  final void Function(BuildContext) onPressed;
+  final void Function() onPressed;
   final String text;
   const AuthButton({
     required this.onPressed,
@@ -35,7 +35,7 @@ class AuthButton extends ConsumerWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       child: TextButton(
-        onPressed: state.isLoading ? null : () => onPressed(context),
+        onPressed: state.isLoading ? null : () => onPressed(),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

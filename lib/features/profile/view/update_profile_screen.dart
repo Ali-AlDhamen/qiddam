@@ -46,7 +46,7 @@ class _UpdateProfileScreenState extends ConsumerState<UpdateProfileScreen> {
     ref.read(authControllerProvider.notifier).updateUserData(
           newName: _name.text.trim(),
           newImage: image,
-          context: context,
+          // TODO: fix the context issue here
         );
   }
 
