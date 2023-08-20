@@ -52,7 +52,7 @@ class _UpdateProfileScreenState extends ConsumerState<UpdateProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final isLoading = ref.watch(authControllerProvider);
+    final state = ref.watch(authControllerProvider);
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
@@ -92,7 +92,7 @@ class _UpdateProfileScreenState extends ConsumerState<UpdateProfileScreen> {
                             borderRadius: BorderRadius.circular(100),
                             color: AppTheme.primaryColor),
                         child: IconButton(
-                          onPressed: isLoading ? null : () => pickUserImage(),
+                          onPressed: state.isLoading ? null : () => pickUserImage(),
                           icon: const Icon(Icons.camera_alt_rounded, size: 20),
                           color: AppTheme.whiteColor,
                         ),

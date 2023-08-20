@@ -64,7 +64,7 @@ final routeProvier = Provider<GoRouter>(
                     GoRoute(
                       path: 'create-challenge',
                       pageBuilder: (context, state) {
-                        return MaterialPage(
+                        return const MaterialPage(
                           fullscreenDialog: true,
                           child: CreateChallengeScreen(),
                         );

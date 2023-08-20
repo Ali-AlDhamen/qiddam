@@ -6,13 +6,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/providers/storage_provider.dart';
-import '../../../core/utils/show_snackbar.dart';
 import '../../../models/user_model.dart';
 import '../repository/auth_repository.dart';
 
 final userProvider = StateProvider<UserModel?>((ref) => null);
 
-final authControllerProvider = StateNotifierProvider<AuthController, bool>(
+final authControllerProvider =
+    StateNotifierProvider<AuthController, AsyncValue<void>>(
   (ref) => AuthController(
     authRepository: ref.watch(authRepositoryProvider),
     storageRepository: ref.watch(storageRepositoryProvider),
@@ -30,7 +30,7 @@ final authStateChangeProvider = StreamProvider((ref) {
   return authController.authStateChange;
 });
 
-class AuthController extends StateNotifier<bool> {
+class AuthController extends StateNotifier<AsyncValue<void>> {
   final AuthRepository _authRepository;
   final StorageRepository _storageRepository;
   final Ref _ref;
@@ -41,7 +41,7 @@ class AuthController extends StateNotifier<bool> {
       : _authRepository = authRepository,
         _ref = ref,
         _storageRepository = storageRepository,
-        super(false);
+        super(const AsyncData(null));
 
   Stream<User?> get authStateChange => _authRepository.authStateChange;
 
@@ -60,14 +60,16 @@ class AuthController extends StateNotifier<bool> {
     required String name,
     required BuildContext context,
   }) async {
-    state = true;
+    state = const AsyncLoading();
     final user = await _authRepository.signUpWithEmail(
         email: email, password: password, username: username, name: name);
-
-    state = false;
-    user.fold((l) => showSnackbar(context, l.message), (userModel) {
+    user.fold((l) {
+      state = AsyncError(l.message, StackTrace.empty);
+    }, (userModel) {
       _ref.read(userProvider.notifier).update((state) => userModel);
     });
+
+    state = const AsyncData(null);
   }
 
   void signInWithEmail({
@@ -75,15 +77,18 @@ class AuthController extends StateNotifier<bool> {
     required String password,
     required BuildContext context,
   }) async {
-    state = true;
+    state = const AsyncLoading();
     final user =
         await _authRepository.signInWithEmail(email: email, password: password);
 
-    state = false;
     user.fold(
-        (l) => showSnackbar(context, l.message),
-        (userModel) =>
-            _ref.read(userProvider.notifier).update((state) => userModel));
+      (l) {
+        state = AsyncError(l.message, StackTrace.empty);
+      },
+      (userModel) =>
+          _ref.read(userProvider.notifier).update((state) => userModel),
+    );
+    state = const AsyncData(null);
   }
 
   void updateUserData({
@@ -91,7 +96,7 @@ class AuthController extends StateNotifier<bool> {
     required File? newImage,
     required BuildContext context,
   }) async {
-    state = true;
+    state = const AsyncLoading();
 
     final userModel = _ref.read(userProvider)!;
 
@@ -118,14 +123,17 @@ class AuthController extends StateNotifier<bool> {
       username: userModel.username,
     );
     final res = await _authRepository.updateUserData(newUserModel);
-    state = false;
+
     res.fold(
-      (l) => showSnackbar(context, l.message),
+      (l) {
+        state = AsyncError(l.message, StackTrace.empty);
+      },
       (r) {
         _ref.read(userProvider.notifier).update((state) => newUserModel);
         context.pop();
       },
     );
+    state = const AsyncData(null);
   }
 
   void signOut() {

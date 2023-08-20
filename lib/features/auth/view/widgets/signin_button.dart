@@ -8,6 +8,10 @@ class SigninButton extends StatelessWidget {
     super.key,
   });
 
+  void navigateToSigninPage(BuildContext context) {
+    context.go("/signin");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -19,9 +23,7 @@ class SigninButton extends StatelessWidget {
               color: Colors.grey.shade500,
             )),
         TextButton(
-          onPressed: () {
-            context.pop();
-          },
+          onPressed: () => navigateToSigninPage(context),
           child: const Text(
             "Sign In",
             style: TextStyle(

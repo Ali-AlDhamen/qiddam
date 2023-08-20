@@ -64,8 +64,7 @@ class _SigninScreenState extends ConsumerState<SigninScreen> {
                     ],
                   ),
                 ),
-                AuthButton(
-                    onPressed: signInWithEmail, text: "Sign In"),
+                AuthButton(onPressed: signInWithEmail, text: "Sign In"),
                 const SignupButton(),
               ],
             ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qiddam/core/common/loader_widget.dart';
 import 'package:qiddam/core/constants/app_sizes.dart';
+import 'package:qiddam/core/utils/async_value_ui.dart';
 import 'package:qiddam/theme/app_theme.dart';
 
 import '../../controller/auth_controller.dart';
@@ -15,9 +16,15 @@ class AuthButton extends ConsumerWidget {
     Key? key,
   }) : super(key: key);
 
+  
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isLoading = ref.watch(authControllerProvider);
+    ref.listen<AsyncValue>(
+      authControllerProvider,
+      (_, state) => state.showAlertDialogOnError(context),
+    );
+    final state = ref.watch(authControllerProvider);
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -28,7 +35,7 @@ class AuthButton extends ConsumerWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       child: TextButton(
-        onPressed: isLoading ? null : () => onPressed(context),
+        onPressed: state.isLoading ? null : () => onPressed(context),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -41,7 +48,7 @@ class AuthButton extends ConsumerWidget {
               ),
             ),
             gapW8,
-            if (isLoading) const LoaderWidget(color: AppTheme.whiteColor),
+            if (state.isLoading) const LoaderWidget(color: AppTheme.whiteColor),
           ],
         ),
       ),

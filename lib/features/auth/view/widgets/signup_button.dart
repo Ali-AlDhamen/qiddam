@@ -7,7 +7,7 @@ class SignupButton extends StatelessWidget {
   const SignupButton({super.key});
 
   void navigateToSignupPage(BuildContext context) {
-    context.push("/signup");
+    context.go("/signup");
   }
 
   @override

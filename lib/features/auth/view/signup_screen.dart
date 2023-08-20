@@ -48,8 +48,9 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
+      
+
     return Scaffold(
-      appBar: AppBar(),
       body: SingleChildScrollView(
         child: SafeArea(
           child: SizedBox(

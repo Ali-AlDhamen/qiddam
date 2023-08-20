@@ -40,7 +40,7 @@ class _CreateChallengeScreenState extends ConsumerState<CreateChallengeScreen> {
     await fcm.requestPermission();
     final token = await fcm.getToken();
     fcm.subscribeToTopic('challenges');
-    print(token);
+    debugPrint('token: $token');
   }
 
   @override

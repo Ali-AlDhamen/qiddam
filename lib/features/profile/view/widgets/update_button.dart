@@ -18,7 +18,7 @@ class UpdateButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isLoading = ref.watch(authControllerProvider);
+    final state = ref.watch(authControllerProvider);
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -29,7 +29,7 @@ class UpdateButton extends ConsumerWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       child: TextButton(
-        onPressed: isLoading ? null : () => onPressed(context, ref),
+        onPressed: state.isLoading ? null : () => onPressed(context, ref),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -42,7 +42,7 @@ class UpdateButton extends ConsumerWidget {
               ),
             ),
             gapW8,
-            if (isLoading) const LoaderWidget(color: AppTheme.whiteColor),
+            if (state.isLoading) const LoaderWidget(color: AppTheme.whiteColor),
           ],
         ),
       ),
