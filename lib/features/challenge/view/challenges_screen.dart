@@ -8,7 +8,7 @@ class ChallengesScreen extends ConsumerWidget {
   const ChallengesScreen({super.key});
 
   void navigateToCreateChallengeScreen(BuildContext context) {
-    context.push('/create-challenge');
+    context.push('/home/create-challenge');
   }
 
   @override
