@@ -13,7 +13,7 @@ class MyChallengeCard extends StatelessWidget {
   });
 
   void navigateToChallengeDetails(BuildContext context) {
-    context.go('/profile/challenge/${challenge.id}');
+    context.push('/profile/challenge/${challenge.id}');
   }
 
   @override

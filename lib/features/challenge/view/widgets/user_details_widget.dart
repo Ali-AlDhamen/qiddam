@@ -10,7 +10,7 @@ class UserDetailsWidget extends StatelessWidget {
   const UserDetailsWidget({super.key, required this.user});
 
   void navigateToProfileScreen(BuildContext context) {
-    context.go('/home/profile/${user.id}');
+    context.push('/home/profile/${user.id}');
   }
 
   @override

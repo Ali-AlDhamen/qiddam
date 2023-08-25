@@ -12,7 +12,7 @@ class CommentUserDetails extends ConsumerWidget {
   const CommentUserDetails(this.userID, {super.key});
 
   void navigateToProfileScreen(BuildContext context, String userID) {
-    context.go('/home/profile/$userID');
+    context.push('/home/profile/$userID');
   }
 
   @override
