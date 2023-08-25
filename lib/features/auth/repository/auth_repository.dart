@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:fpdart/fpdart.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/constants/firebase_constants.dart';
 import '../../../core/exceptions/fireauth_exceptions.dart';
@@ -10,12 +11,15 @@ import '../../../core/types/failure.dart';
 import '../../../core/types/future_either.dart';
 import '../../../models/user_model.dart';
 
-final authRepositoryProvider = Provider(
-  (ref) => AuthRepository(
-    firestore: ref.read(firestoreProvider),
-    auth: ref.read(authProvider),
-  ),
-);
+part 'auth_repository.g.dart';
+
+@Riverpod(keepAlive: true)
+AuthRepository authRepository(AuthRepositoryRef ref) {
+  return AuthRepository(
+    firestore: ref.watch(firestoreProvider),
+    auth: ref.watch(authProvider),
+  );
+}
 
 class AuthRepository {
   final FirebaseFirestore _firestore;
@@ -30,7 +34,6 @@ class AuthRepository {
       _firestore.collection(FirebaseConstants.usersCollection);
 
   Stream<User?> get authStateChange => _auth.authStateChanges();
-
 
   User? get currentUser => _auth.currentUser;
 

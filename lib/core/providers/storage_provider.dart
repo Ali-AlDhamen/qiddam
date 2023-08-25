@@ -1,18 +1,23 @@
 import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fpdart/fpdart.dart';
 
+import 'package:fpdart/fpdart.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../types/failure.dart';
 import '../types/future_either.dart';
 import 'firebase_providers.dart';
 
-final storageRepositoryProvider = Provider(
-  (ref) => StorageRepository(
-    firebaseStorage: ref.watch(storageProvider),
-  ),
-);
+part 'storage_provider.g.dart';
+
+@Riverpod(keepAlive: true)
+StorageRepository storageRepository(StorageRepositoryRef ref) {
+  return StorageRepository(
+    firebaseStorage:  ref.watch(storageProvider),
+  );
+}
+
+
 
 class StorageRepository {
   final FirebaseStorage _firebaseStorage;

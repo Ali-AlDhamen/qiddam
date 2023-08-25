@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../core/providers/storage_provider.dart';
@@ -7,36 +8,41 @@ import '../../../models/comment.dart';
 import '../../auth/controller/auth_controller.dart';
 import '../repository/challenge_repository.dart';
 
+part 'challenge_controller.g.dart';
+
 final challengeControllerProvider =
-    StateNotifierProvider<ChallengeController, AsyncValue<void>>((ref) {
+    StateNotifierProvider.autoDispose<ChallengeController, AsyncValue<void>>(
+        (ref) {
   return ChallengeController(
       challengeRepository: ref.watch(challengeRepositoryProvider),
       ref: ref,
       storageRepository: ref.watch(storageRepositoryProvider));
 });
 
-final watchChallengesProvider = StreamProvider<List<Challenge>>((ref) {
+@riverpod
+Stream<List<Challenge>> watchChallenges(WatchChallengesRef ref) {
   final challengeController = ref.watch(challengeControllerProvider.notifier);
   return challengeController.watchChallenges();
-});
+}
 
-final watchUserChallengesProvider =
-    StreamProvider.family<List<Challenge>, String>((ref, String userID) {
+@riverpod
+Stream<List<Challenge>> watchUserChallenges(
+    WatchUserChallengesRef ref, String userID) {
   final challengeController = ref.watch(challengeControllerProvider.notifier);
   return challengeController.watchUserChallenges(userID);
-});
+}
 
-final watchCommentsProvider =
-    StreamProvider.family<List<Comment>, String>((ref, String postID) {
+@riverpod
+Stream<List<Comment>> watchComments(WatchCommentsRef ref, String postID) {
   final challengeController = ref.watch(challengeControllerProvider.notifier);
   return challengeController.watchComments(postID);
-});
+}
 
-final watchChallengeProvider =
-    StreamProvider.family<Challenge, String>((ref, String challengeID) {
+@riverpod
+Stream<Challenge> watchChallenge(WatchChallengeRef ref, String challengeID) {
   final challengeController = ref.watch(challengeControllerProvider.notifier);
   return challengeController.watchChallenge(challengeID);
-});
+}
 
 class ChallengeController extends StateNotifier<AsyncValue<void>> {
   final ChallengeRepository _challengeRepository;
@@ -116,8 +122,6 @@ class ChallengeController extends StateNotifier<AsyncValue<void>> {
     required String challengeId,
     required void Function() onSuccess,
   }) async {
-    
-
     final userId = _ref.read(userProvider)?.id ?? '';
 
     final res = await _challengeRepository.joinChallenge(
@@ -131,7 +135,6 @@ class ChallengeController extends StateNotifier<AsyncValue<void>> {
       onSuccess();
     });
     state = const AsyncData(null);
-
   }
 
   Stream<List<Challenge>> watchChallenges() {

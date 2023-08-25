@@ -2,15 +2,18 @@ import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/providers/storage_provider.dart';
 import '../../../models/user_model.dart';
 import '../repository/auth_repository.dart';
 
+part 'auth_controller.g.dart';
+
 final userProvider = StateProvider<UserModel?>((ref) => null);
 
 final authControllerProvider =
-    StateNotifierProvider<AuthController, AsyncValue<void>>(
+    StateNotifierProvider.autoDispose<AuthController, AsyncValue<void>>(
   (ref) => AuthController(
     authRepository: ref.watch(authRepositoryProvider),
     storageRepository: ref.watch(storageRepositoryProvider),
@@ -18,15 +21,18 @@ final authControllerProvider =
   ),
 );
 
-final getUserDataProvider = StreamProvider.family((ref, String uid) {
+@riverpod
+Stream<UserModel> getUserData(GetUserDataRef ref, String uid) {
   final authController = ref.watch(authControllerProvider.notifier);
   return authController.getUserData(uid);
-});
+}
 
-final authStateChangeProvider = StreamProvider((ref) {
+
+@riverpod
+Stream<User?> authStateChange(AuthStateChangeRef ref) {
   final authController = ref.watch(authControllerProvider.notifier);
   return authController.authStateChange;
-});
+}
 
 class AuthController extends StateNotifier<AsyncValue<void>> {
   final AuthRepository _authRepository;

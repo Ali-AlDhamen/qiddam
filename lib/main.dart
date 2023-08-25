@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qiddam/core/exceptions/error_logger.dart';
 import 'package:qiddam/routing/route.dart';
+
 import 'package:qiddam/theme/app_theme.dart';
 import 'core/exceptions/async_error_logger.dart';
 import 'features/auth/controller/auth_controller.dart';
@@ -50,7 +51,7 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final router = ref.watch(routeProvier);
+    final router = ref.watch(goRouterProvider);
 
     ref.watch(authStateChangeProvider).whenData((data) {
       if (data != null) {

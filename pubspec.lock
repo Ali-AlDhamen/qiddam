@@ -672,6 +672,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.3.2"
+  riverpod_annotation:
+    dependency: "direct main"
+    description:
+      name: riverpod_annotation
+      sha256: cedd6a54b6f5764ffd5c05df57b6676bfc8c01978e14ee60a2c16891038820fe
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.1"
+  riverpod_generator:
+    dependency: "direct dev"
+    description:
+      name: riverpod_generator
+      sha256: f543ebc7f7020d1400dc2081a6072e72ebcc5f185407701258181cdd8ce36207
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.2.5"
   riverpod_lint:
     dependency: "direct dev"
     description:

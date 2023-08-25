@@ -6,7 +6,6 @@ part of 'comment.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-// ignore: non_constant_identifier_names
 _$_Comment _$$_CommentFromJson(Map<String, dynamic> json) => _$_Comment(
       id: json['id'] as String,
       content: json['content'] as String,
@@ -15,7 +14,6 @@ _$_Comment _$$_CommentFromJson(Map<String, dynamic> json) => _$_Comment(
       createdAt: DateTime.parse(json['createdAt'] as String),
     );
 
-// ignore: non_constant_identifier_names
 Map<String, dynamic> _$$_CommentToJson(_$_Comment instance) =>
     <String, dynamic>{
       'id': instance.id,

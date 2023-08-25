@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/constants/firebase_constants.dart';
 import '../../../core/providers/firebase_providers.dart';
@@ -9,11 +10,14 @@ import '../../../core/types/future_either.dart';
 import '../../../models/challenge.dart';
 import '../../../models/comment.dart';
 
-final challengeRepositoryProvider = Provider<ChallengeRepository>((ref) {
+part 'challenge_repository.g.dart';
+
+@riverpod
+ChallengeRepository challengeRepository(ChallengeRepositoryRef ref) {
   return ChallengeRepository(
     firestore: ref.watch(firestoreProvider),
   );
-});
+}
 
 class ChallengeRepository {
   final FirebaseFirestore _firestore;
