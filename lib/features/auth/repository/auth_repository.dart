@@ -31,6 +31,9 @@ class AuthRepository {
 
   Stream<User?> get authStateChange => _auth.authStateChanges();
 
+
+  User? get currentUser => _auth.currentUser;
+
   String initalPath() {
     if (_auth.currentUser != null) {
       return '/home';

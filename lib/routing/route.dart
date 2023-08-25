@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:qiddam/features/auth/repository/auth_repository.dart';
 import 'package:qiddam/features/challenge/view/challenges_screen.dart';
 import 'package:qiddam/features/profile/view/profile_screen.dart';
 import 'package:qiddam/features/profile/view/update_profile_screen.dart';
+import 'package:qiddam/routing/not_found_screen.dart';
 
 import '../features/auth/controller/auth_controller.dart';
 import '../features/auth/view/signin_screen.dart';
 import '../features/auth/view/signup_screen.dart';
+import '../features/challenge/view/challenge_screen.dart';
 import '../features/challenge/view/create_challenge_screen.dart';
 import '../features/home/view/home_screen.dart';
-import '../features/challenge/view/challenge_screen.dart';
+import 'go_router_refresh_stream.dart';
 
 final routeProvier = Provider<GoRouter>(
   (ref) {
@@ -23,16 +26,17 @@ final routeProvier = Provider<GoRouter>(
       debugLogDiagnostics: true,
       initialLocation: ref.read(authControllerProvider.notifier).initalPath(),
       navigatorKey: rootNavigatorKey,
+      refreshListenable: GoRouterRefreshStream(
+        ref.watch(authRepositoryProvider).authStateChange,
+      ),
+      redirectLimit: 2,
       redirect: (context, state) {
-        final userIsLogging = state.uri.toString() == '/signin' ||
-            state.uri.toString() == '/signup';
-        bool userIsLoggedIn = false;
-        ref.watch(authStateChangeProvider).whenData((value) {
-          userIsLoggedIn = value != null;
-        });
+        final path = state.uri.path;
+        final userIsLogging = path == '/signin' || path == '/signup';
+        bool userIsLoggedIn = ref.read(authRepositoryProvider).currentUser != null;
 
         if (userIsLogging && userIsLoggedIn) {
-          return '/';
+          return '/home';
         } else if (!userIsLogging && !userIsLoggedIn) {
           return '/signin';
         } else {
@@ -119,6 +123,7 @@ final routeProvier = Provider<GoRouter>(
           builder: (context, state) => const SignUpScreen(),
         ),
       ],
+      errorBuilder: (context, state) => const NotFoundScreen(),
     );
   },
 );
