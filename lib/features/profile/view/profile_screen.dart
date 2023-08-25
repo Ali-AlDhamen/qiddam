@@ -45,25 +45,27 @@ class ProfileScreen extends ConsumerWidget {
         ],
       ),
       body: SafeArea(
-        child: Center(
-          child: Column(
-            children: [
-              ProfileInformation(userId: userId, currentUserId: currentUserId),
-              const Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 12),
-                  child: Text(
-                    'My Challenges',
-                    style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: AppTheme.subtitleColor),
+        child: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              children: [
+                ProfileInformation(userId: userId, currentUserId: currentUserId),
+                const Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 12),
+                    child: Text(
+                      'My Challenges',
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: AppTheme.subtitleColor),
+                    ),
                   ),
                 ),
-              ),
-              MyChallenges(userId: userId),
-            ],
+                MyChallenges(userId: userId),
+              ],
+            ),
           ),
         ),
       ),

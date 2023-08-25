@@ -20,14 +20,8 @@ class MyChallenges extends ConsumerWidget {
         if (challenges.isEmpty) {
           return const Center(child: Text('No Challenges'));
         }
-        return Expanded(
-          child: ListView.builder(
-            itemCount: challenges.length,
-            itemBuilder: (context, index) {
-              final challenge = challenges[index];
-              return MyChallengeCard(challenge: challenge);
-            },
-          ),
+        return Column(
+          children: challenges.map((e) => MyChallengeCard(challenge: e)).toList(),
         );
       },
     );
