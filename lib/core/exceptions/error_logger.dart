@@ -1,0 +1,16 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+class ErrorLogger {
+  void logError(Object error, StackTrace? stackTrace) {
+    // * This can be replaced with a call to a crash reporting tool of choice
+    debugPrint('$error, $stackTrace');
+  }
+
+  void logAppException(Exception exception) {
+    // * This can be replaced with a call to a crash reporting tool of choice
+    debugPrint('$exception');
+  }
+}
+
+final errorLoggerProvider = Provider((ref) => ErrorLogger());

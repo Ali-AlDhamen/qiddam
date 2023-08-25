@@ -95,8 +95,7 @@ class AuthRepository {
     try {
       return Right(await _users.doc(userModel.id).update(userModel.toJson()));
     } on FirebaseAuthException catch (e) {
-            return Left(Failure(handleAuthException(e.code)));
-
+      return Left(Failure(handleAuthException(e.code)));
     } catch (e) {
       return Left(Failure(e.toString()));
     }
