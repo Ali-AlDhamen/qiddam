@@ -1,7 +1,9 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:qiddam/core/constants/app_sizes.dart';
+import 'package:qiddam/core/utils/async_value_ui.dart';
 import 'package:qiddam/core/utils/general_vaildator.dart';
 import 'package:qiddam/core/utils/number_vaildator.dart';
 import 'package:qiddam/features/auth/view/widgets/custom_textfield.dart';
@@ -27,7 +29,7 @@ class _CreateChallengeScreenState extends ConsumerState<CreateChallengeScreen> {
   void createChallenge(BuildContext context, WidgetRef ref) {
     if (_formKey.currentState!.validate()) {
       ref.read(challengeControllerProvider.notifier).createChallenge(
-            context: context,
+            onSuccess: context.pop,
             title: _titleController.text,
             description: _descriptionController.text,
             days: int.parse(_daysController.text),
@@ -51,6 +53,10 @@ class _CreateChallengeScreenState extends ConsumerState<CreateChallengeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ref.listen<AsyncValue>(
+      challengeControllerProvider,
+      (_, state) => state.showAlertDialogOnError(context),
+    );
     return Scaffold(
         appBar: AppBar(
           title: const Text('Create Challenge'),

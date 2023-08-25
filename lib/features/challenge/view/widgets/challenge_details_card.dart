@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:qiddam/core/utils/async_value_ui.dart';
+import 'package:qiddam/core/utils/show_snackbar.dart';
 import 'package:qiddam/features/challenge/view/widgets/user_details_widget.dart';
 import 'package:qiddam/models/challenge.dart';
 
@@ -24,12 +26,13 @@ class ChallengeDetailsCard extends ConsumerWidget {
     }
     ref.read(challengeControllerProvider.notifier).joinChallenge(
           challengeId: challenge.id,
-          context: context,
+          onSuccess: () => showSnackbar(context, "You have joined the challenge!"),
         );
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+     
     final user =
         ref.watch(getUserDataProvider(challenge.userId)).asData?.value ??
             const UserModel(

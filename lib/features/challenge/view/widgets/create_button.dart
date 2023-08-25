@@ -17,7 +17,7 @@ class CreateButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isLoading = ref.watch(challengeControllerProvider);
+    final state = ref.watch(challengeControllerProvider);
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -28,7 +28,7 @@ class CreateButton extends ConsumerWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       child: TextButton(
-        onPressed: isLoading ? null : () => onPressed(context, ref),
+        onPressed: state.isLoading ? null : () => onPressed(context, ref),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -41,7 +41,7 @@ class CreateButton extends ConsumerWidget {
               ),
             ),
             gapW8,
-            if (isLoading) const LoaderWidget(color: AppTheme.whiteColor),
+            if (state.isLoading) const LoaderWidget(color: AppTheme.whiteColor),
           ],
         ),
       ),

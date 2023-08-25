@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-
 import 'widgets/all_challenges.dart';
 
 class ChallengesScreen extends ConsumerWidget {
   const ChallengesScreen({super.key});
 
   void navigateToCreateChallengeScreen(BuildContext context) {
-    context.push('/home/create-challenge');
+    context.go('/home/create-challenge');
   }
 
   @override
@@ -27,4 +26,3 @@ class ChallengesScreen extends ConsumerWidget {
     );
   }
 }
-

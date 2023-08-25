@@ -1,7 +1,4 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
-import 'package:qiddam/core/utils/show_snackbar.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../core/providers/storage_provider.dart';
@@ -11,7 +8,7 @@ import '../../auth/controller/auth_controller.dart';
 import '../repository/challenge_repository.dart';
 
 final challengeControllerProvider =
-    StateNotifierProvider<ChallengeController, bool>((ref) {
+    StateNotifierProvider<ChallengeController, AsyncValue<void>>((ref) {
   return ChallengeController(
       challengeRepository: ref.watch(challengeRepositoryProvider),
       ref: ref,
@@ -41,7 +38,7 @@ final watchChallengeProvider =
   return challengeController.watchChallenge(challengeID);
 });
 
-class ChallengeController extends StateNotifier<bool> {
+class ChallengeController extends StateNotifier<AsyncValue<void>> {
   final ChallengeRepository _challengeRepository;
   final Ref _ref;
   // ignore: unused_field
@@ -53,15 +50,15 @@ class ChallengeController extends StateNotifier<bool> {
       : _challengeRepository = challengeRepository,
         _ref = ref,
         _storageRepository = storageRepository,
-        super(false);
+        super(const AsyncData(null));
 
   void createChallenge({
     required String title,
     required String description,
     required int days,
-    required BuildContext context,
+    required void Function() onSuccess,
   }) async {
-    state = true;
+    state = const AsyncLoading();
 
     final userId = _ref.read(userProvider)?.id ?? '';
     final id = const Uuid().v4();
@@ -78,21 +75,20 @@ class ChallengeController extends StateNotifier<bool> {
     final res = await _challengeRepository.createChallenge(
       challenge: challenge,
     );
-    state = false;
     res.fold((l) {
-      showSnackbar(context, l.message);
+      state = AsyncError(l.message, StackTrace.empty);
     }, (r) async {
-      showSnackbar(context, 'Challenge created successfully');
-      context.pop();
+      onSuccess();
     });
+    state = const AsyncData(null);
   }
 
   void addComment({
     required String comment,
     required String challengeId,
-    required BuildContext context,
+    required void Function() onSuccess,
   }) async {
-    state = true;
+    state = const AsyncLoading();
 
     final userId = _ref.read(userProvider)?.id ?? '';
     final id = const Uuid().v4();
@@ -107,20 +103,20 @@ class ChallengeController extends StateNotifier<bool> {
     final res = await _challengeRepository.addComment(
       comment: commentModel,
     );
-    state = false;
 
     res.fold((l) {
-      showSnackbar(context, l.message);
+      state = AsyncError(l.message, StackTrace.empty);
     }, (r) async {
-      showSnackbar(context, 'Comment added successfully');
+      onSuccess();
     });
+    state = const AsyncData(null);
   }
 
   void joinChallenge({
     required String challengeId,
-    required BuildContext context,
+    required void Function() onSuccess,
   }) async {
-    state = true;
+    
 
     final userId = _ref.read(userProvider)?.id ?? '';
 
@@ -128,13 +124,14 @@ class ChallengeController extends StateNotifier<bool> {
       challengeID: challengeId,
       userID: userId,
     );
-    state = false;
 
     res.fold((l) {
-      showSnackbar(context, l.message);
+      state = AsyncError(l.message, StackTrace.empty);
     }, (r) async {
-      showSnackbar(context, 'Challenge joined successfully');
+      onSuccess();
     });
+    state = const AsyncData(null);
+
   }
 
   Stream<List<Challenge>> watchChallenges() {

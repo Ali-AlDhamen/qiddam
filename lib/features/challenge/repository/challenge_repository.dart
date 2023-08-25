@@ -45,7 +45,6 @@ class ChallengeRepository {
     }
   }
 
- 
   Stream<List<Challenge>> watchChallenges() {
     return _challenges.snapshots().map((snapshot) {
       return snapshot.docs.map((doc) {

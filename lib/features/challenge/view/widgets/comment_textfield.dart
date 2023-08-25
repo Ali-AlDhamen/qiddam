@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:qiddam/core/utils/show_snackbar.dart';
 
 import '../../../../core/common/loader_widget.dart';
 import '../../../../theme/app_theme.dart';
@@ -15,15 +16,16 @@ class CommentTextField extends ConsumerWidget {
     ref.read(challengeControllerProvider.notifier).addComment(
           challengeId: challengeId,
           comment: commentController.text.trim(),
-          context: context,
+          onSuccess: () {
+            showSnackbar(context, 'Comment added successfully');
+            commentController.clear();
+          },
         );
-
-    commentController.clear();
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isLoading = ref.watch(challengeControllerProvider);
+    final state = ref.watch(challengeControllerProvider);
 
     return Container(
       width: double.infinity,
@@ -76,8 +78,9 @@ class CommentTextField extends ConsumerWidget {
             ),
           ),
           IconButton(
-            onPressed: isLoading ? null : () => writeComment(context, ref),
-            icon: isLoading
+            onPressed:
+                state.isLoading ? null : () => writeComment(context, ref),
+            icon: state.isLoading
                 ? const LoaderWidget()
                 : const Icon(Icons.send, color: AppTheme.primaryColor),
           ),
