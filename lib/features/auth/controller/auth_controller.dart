@@ -90,6 +90,7 @@ class AuthController extends StateNotifier<AsyncValue<void>> {
   void updateUserData({
     required String newName,
     required File? newImage,
+    required void Function() onSuccess,
   }) async {
     state = const AsyncLoading();
 
@@ -125,6 +126,7 @@ class AuthController extends StateNotifier<AsyncValue<void>> {
       },
       (r) {
         _ref.read(userProvider.notifier).update((state) => newUserModel);
+        onSuccess();
       },
     );
     state = const AsyncData(null);

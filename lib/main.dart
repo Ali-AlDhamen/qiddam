@@ -10,7 +10,6 @@ import 'core/exceptions/async_error_logger.dart';
 import 'features/auth/controller/auth_controller.dart';
 import 'firebase_options.dart';
 
-import 'package:stack_trace/stack_trace.dart' as stack_trace;
 
 import 'models/user_model.dart';
 

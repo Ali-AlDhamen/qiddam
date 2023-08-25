@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:qiddam/core/utils/async_value_ui.dart';
 import 'package:qiddam/core/utils/show_snackbar.dart';
 import 'package:qiddam/features/challenge/view/widgets/user_details_widget.dart';
 import 'package:qiddam/models/challenge.dart';
