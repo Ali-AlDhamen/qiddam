@@ -23,18 +23,20 @@ class ChallengeScreen extends ConsumerWidget {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Challenge'),
       ),
-      body: Column(
-        children: [
-          ChallengeDetailsWidget(
-            challengeId: challengeId,
-          ),
-          CommentTextField(
-            challengeId: challengeId,
-          ),
-          ChallengeComments(
-            challengeId: challengeId,
-          )
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            ChallengeDetailsWidget(
+              challengeId: challengeId,
+            ),
+            CommentTextField(
+              challengeId: challengeId,
+            ),
+            ChallengeComments(
+              challengeId: challengeId,
+            )
+          ],
+        ),
       ),
     );
   }
